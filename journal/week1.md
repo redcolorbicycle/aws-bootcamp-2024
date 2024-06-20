@@ -10,7 +10,7 @@ The backend dockerfile should contain the base image (FROM python:3.10-slim-bust
 
 2. To link multiple containers, we need a docker-compose.yml file (which you run by running command docker-compose up). It should contain a version, services and networks. Under services,
 
-
+```
 services:
   backend-flask:
     environment: (set environment variables)
@@ -29,3 +29,10 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend-react-js:/frontend-react-js
+```
+
+3. To run these, you must first build then run the dockerfile. Build with: docker build -t backend-flask ./backend-flask, where -t is the tag, and ./backend-flask is the directory from which to look for the dockerfile. After that, we run 
+
+docker run --rm -p 4567:4567 -it -e FRONTEND_URL='' -e BACKEND_URL='' backend-flask
+
+where -p means match local:container and -it starts the container interactively. -e allows us to sub in values that are {}, and the last argument is the name of the Docker image to run as a container.
